@@ -1,0 +1,81 @@
+---
+import Base from '../layouts/Base.astro';
+import { Image } from 'astro:assets';
+import { getCollection, render } from 'astro:content';
+
+const entries = (await getCollection('gallery')).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
+);
+const projects = [...new Set(entries.map((e) => e.data.project))].sort();
+const rendered = await Promise.all(
+  entries.map(async (entry) => ({ entry, Content: (await render(entry)).Content }))
+);
+---
+<Base title="Gallery · Fourth Wall Gaming" description="AI-generated art, film, and comics from Fourth Wall Gaming worlds.">
+  <div class="container">
+    <h1>Gallery</h1>
+    <p class="lede">Art generated alongside the worlds — every piece tied to the canon it illustrates.</p>
+
+    <div class="filters" id="filters">
+      <button data-project="all" class="active">All</button>
+      {projects.map((p) => <button data-project={p}>{p}</button>)}
+    </div>
+
+    <div class="gallery-grid">
+      {rendered.map(({ entry, Content }) => (
+        <figure class="card gallery-item" data-project={entry.data.project}>
+          <Image src={entry.data.image} alt={entry.data.title} width={800} />
+          <figcaption>
+            <h3>{entry.data.title}</h3>
+            <p class="meta">{entry.data.project} · {entry.data.medium} · {entry.data.tools.join(', ')}</p>
+            <Content />
+          </figcaption>
+        </figure>
+      ))}
+    </div>
+  </div>
+
+  <style>
+    .lede { color: var(--text-dim); max-width: 38rem; }
+    .filters { display: flex; gap: 0.5rem; flex-wrap: wrap; margin: 1.5rem 0; }
+    .filters button {
+      background: var(--bg-raised);
+      color: var(--text-dim);
+      border: 1px solid #2a2735;
+      border-radius: 999px;
+      padding: 0.35rem 1rem;
+      cursor: pointer;
+      font: inherit;
+      font-size: 0.9rem;
+    }
+    .filters button.active { border-color: var(--amber); color: var(--amber); }
+    .gallery-grid {
+      display: grid;
+      gap: 1.25rem;
+      grid-template-columns: repeat(auto-fill, minmax(18rem, 1fr));
+    }
+    .gallery-item { margin: 0; padding: 0; overflow: hidden; }
+    .gallery-item :global(img) { width: 100%; }
+    .gallery-item figcaption { padding: 1rem 1.25rem 1.25rem; }
+    .gallery-item .meta { font-size: 0.8rem; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.05em; }
+    .gallery-item.hidden { display: none; }
+  </style>
+
+  <script>
+    const buttons = document.querySelectorAll('#filters button');
+    const items = document.querySelectorAll('.gallery-item');
+    buttons.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        buttons.forEach((b) => b.classList.remove('active'));
+        btn.classList.add('active');
+        const project = (btn as HTMLElement).dataset.project;
+        items.forEach((item) => {
+          (item as HTMLElement).classList.toggle(
+            'hidden',
+            project !== 'all' && (item as HTMLElement).dataset.project !== project
+          );
+        });
+      });
+    });
+  </script>
+</Base>
