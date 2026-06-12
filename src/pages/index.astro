@@ -1,6 +1,92 @@
 ---
 import Base from '../layouts/Base.astro';
+import { Image } from 'astro:assets';
+import logo from '../assets/logo-full.jpg';
 ---
 <Base>
-  <div class="container"><h1>Fourth Wall Gaming</h1></div>
+  <section class="hero container">
+    <Image src={logo} alt="A black cat silhouetted against a stained-glass rose window — the Fourth Wall Gaming mark" width={420} class="hero-logo" loading="eager" />
+    <h1>Fourth Wall Gaming</h1>
+    <p class="tagline">
+      An open-source <strong>agentic gaming studio</strong> — AI gamemasters, worlds, art,
+      and stories built on the Mythras ORC SRDs.
+    </p>
+    <div class="hero-actions">
+      <a class="btn btn-primary" href="/play/">Play now</a>
+      <a class="btn btn-ghost" href="/tech/">How it works</a>
+    </div>
+  </section>
+
+  <section class="container">
+    <div class="grid-3">
+      <div class="card accent-ruby">
+        <h3>Play it now</h3>
+        <p>Install the Mythras GM plugin for Claude Code and sit down at a table where the
+        gamemaster never forgets a wound, a debt, or a name. Persistent campaigns in a
+        knowledge graph; honest dice you can audit.</p>
+        <a href="/play/">Get playing →</a>
+      </div>
+      <div class="card accent-amber">
+        <h3>Not slop</h3>
+        <p>AI-assisted doesn't mean derivative. Read how the Veilwrack was made: its
+        antecedents named honestly, its original ideas defended, and what worldbuilding
+        at machine scale actually looks like.</p>
+        <a href="/craft/">The craft →</a>
+      </div>
+      <div class="card accent-cobalt">
+        <h3>Under the hood</h3>
+        <p>A deterministic d100 rules engine, a TypeDB knowledge graph as the save file,
+        and campaigns published as Git repos. Serious engineering for serious play.</p>
+        <a href="/tech/">The tech →</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="container">
+    <h2>Projects</h2>
+    <div class="grid-3">
+      <div class="card">
+        <h3>mythras-gm</h3>
+        <p>A Claude-powered Gamesmaster for Mythras Imperative. Rules engine, combat
+        resolution, character generation, campaign publishing — all persisted in TypeDB.</p>
+        <a href="https://github.com/fourth-wall-gaming/mythras-gm">github.com/fourth-wall-gaming/mythras-gm →</a>
+      </div>
+      <div class="card">
+        <h3>The Veilwrack: The Stilling</h3>
+        <p>An original sky realm. No ground — winged peoples on the calcified husks of dead
+        sky-leviathans, and the wind itself is dying. 46 lore entries, 7 factions, a
+        five-act arc.</p>
+        <a href="https://github.com/fourth-wall-gaming/veilwrack-campaign">github.com/fourth-wall-gaming/veilwrack-campaign →</a>
+      </div>
+      <div class="card">
+        <h3>Gallery</h3>
+        <p>Art, and eventually film and comics, generated alongside the worlds — every
+        piece traceable to the campaign canon it illustrates.</p>
+        <a href="/gallery/">Browse the gallery →</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="container mythras-plug">
+    <div class="card accent-emerald">
+      <h2 style="margin-top:0">Built on Mythras — get the real game</h2>
+      <p>Everything here runs on the <em>Mythras Imperative</em> SRD under the ORC License.
+      Mythras is one of the finest d100 systems ever written: fast, deadly, deeply
+      simulationist. If you enjoy playing it with an AI gamemaster, buy the books and
+      play it with your friends.</p>
+      <p>
+        <a href="https://thedesignmechanism.com">The Design Mechanism</a> publishes
+        <em>Mythras</em>, <em>Mythras Imperative</em>, and <em>Classic Fantasy</em>.
+      </p>
+    </div>
+  </section>
+
+  <style>
+    .hero { text-align: center; padding: 3rem 1.25rem 2rem; }
+    .hero-logo { margin: 0 auto 1.5rem; border-radius: 16px; }
+    .tagline { font-size: 1.2rem; color: var(--text-dim); max-width: 38rem; margin: 0 auto 1.75rem; }
+    .hero-actions { display: flex; gap: 0.9rem; justify-content: center; flex-wrap: wrap; }
+    section.container { margin-bottom: 2.5rem; }
+    .mythras-plug { margin-top: 1rem; }
+  </style>
 </Base>
