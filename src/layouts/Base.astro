@@ -1,0 +1,86 @@
+---
+import '../styles/global.css';
+const { title = 'Fourth Wall Gaming', description = 'An open-source agentic gaming studio — AI gamemasters, worlds, art, and stories built on the Mythras ORC SRDs.' } = Astro.props;
+const nav = [
+  { href: '/play/', label: 'Play' },
+  { href: '/craft/', label: 'Craft' },
+  { href: '/tech/', label: 'Tech' },
+  { href: '/gallery/', label: 'Gallery' },
+];
+const current = Astro.url.pathname;
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+  </head>
+  <body>
+    <header>
+      <div class="container header-inner">
+        <a href="/" class="wordmark">Fourth Wall Gaming</a>
+        <nav>
+          {nav.map((item) => (
+            <a href={item.href} class={current.startsWith(item.href) ? 'active' : ''}>{item.label}</a>
+          ))}
+        </nav>
+      </div>
+    </header>
+    <main>
+      <slot />
+    </main>
+    <footer>
+      <div class="container">
+        <p>
+          This work is based on <em>Mythras Imperative</em>, written by Pete Nash and Lawrence
+          Whitaker, and published by <a href="https://thedesignmechanism.com">The Design Mechanism</a>,
+          Copyright 2023, used under the ORC License. <em>Mythras</em> and <em>Mythras Imperative</em>
+          are Reserved Material of The Design Mechanism.
+        </p>
+        <p>
+          Code and original content: MIT License ·
+          <a href="https://github.com/fourth-wall-gaming">GitHub</a>
+        </p>
+      </div>
+    </footer>
+    <style>
+      header {
+        border-bottom: 1px solid #2a2735;
+        position: sticky;
+        top: 0;
+        background: color-mix(in srgb, var(--bg) 88%, transparent);
+        backdrop-filter: blur(8px);
+        z-index: 10;
+      }
+      .header-inner {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        padding-top: 0.8rem;
+        padding-bottom: 0.8rem;
+        flex-wrap: wrap;
+      }
+      .wordmark {
+        font-family: Georgia, serif;
+        font-weight: 700;
+        font-size: 1.15rem;
+        color: var(--text);
+        text-decoration: none;
+      }
+      nav { display: flex; gap: 1.1rem; }
+      nav a { color: var(--text-dim); text-decoration: none; font-size: 0.95rem; }
+      nav a:hover, nav a.active { color: var(--amber); }
+      footer {
+        border-top: 1px solid #2a2735;
+        margin-top: 4rem;
+        padding: 2rem 0 3rem;
+        font-size: 0.85rem;
+        color: var(--text-dim);
+      }
+    </style>
+  </body>
+</html>
