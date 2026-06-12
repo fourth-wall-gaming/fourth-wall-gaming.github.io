@@ -16,7 +16,7 @@ const current = Astro.url.pathname;
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
     <meta name="description" content={description} />
-    <link rel="icon" type="image/png" href="/favicon.png" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   </head>
   <body>
     <header>
@@ -48,10 +48,10 @@ const current = Astro.url.pathname;
     </footer>
     <style>
       header {
-        border-bottom: 1px solid #2a2735;
+        border-bottom: 3px double var(--rule-strong);
         position: sticky;
         top: 0;
-        background: color-mix(in srgb, var(--bg) 88%, transparent);
+        background: color-mix(in srgb, var(--bg) 92%, transparent);
         backdrop-filter: blur(8px);
         z-index: 10;
       }
@@ -68,14 +68,22 @@ const current = Astro.url.pathname;
         font-family: Georgia, serif;
         font-weight: 700;
         font-size: 1.15rem;
+        font-variant: small-caps;
+        letter-spacing: 0.05em;
         color: var(--text);
         text-decoration: none;
       }
       nav { display: flex; gap: 1.1rem; }
-      nav a { color: var(--text-dim); text-decoration: none; font-size: 0.95rem; }
-      nav a:hover, nav a.active { color: var(--amber); }
+      nav a {
+        color: var(--text-dim);
+        text-decoration: none;
+        font-size: 0.95rem;
+        font-variant: small-caps;
+        letter-spacing: 0.04em;
+      }
+      nav a:hover, nav a.active { color: var(--ruby); }
       footer {
-        border-top: 1px solid #2a2735;
+        border-top: 3px double var(--rule-strong);
         margin-top: 4rem;
         padding: 2rem 0 3rem;
         font-size: 0.85rem;

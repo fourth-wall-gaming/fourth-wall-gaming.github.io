@@ -1,62 +1,81 @@
 ---
 import Base from '../layouts/Base.astro';
-import { Image } from 'astro:assets';
-import logo from '../assets/logo-full.jpg';
 ---
 <Base>
   <section class="hero container">
-    <Image src={logo} alt="A black cat silhouetted against a stained-glass rose window — the Fourth Wall Gaming mark" width={420} class="hero-logo" loading="eager" />
+    <p class="kicker">An Open-Source Agentic Gaming Studio</p>
     <h1>Fourth Wall Gaming</h1>
+    <div class="divider">✦</div>
     <p class="tagline">
-      An open-source <strong>agentic gaming studio</strong> — AI gamemasters, worlds, art,
-      and stories built on the Mythras ORC SRDs.
+      AI gamemasters, worlds, art, and stories — built on the
+      <strong>Mythras</strong> and <strong>Classic Fantasy</strong> ORC rules.
+    </p>
+    <p class="flavor">
+      A table where the gamesmaster never forgets a wound, a debt, or a name.
+      You speak; the world answers. The dice are honest, and the ledger is kept.
     </p>
     <div class="hero-actions">
-      <a class="btn btn-primary" href="/play/">Play now</a>
-      <a class="btn btn-ghost" href="/tech/">How it works</a>
+      <a class="btn btn-primary" href="/play/">Roll Initiative</a>
+      <a class="btn btn-ghost" href="/tech/">Read the Rules</a>
+    </div>
+  </section>
+
+  <section class="container">
+    <div class="rules-box card">
+      <p class="rules-head">How a check resolves at this table</p>
+      <table>
+        <tbody>
+          <tr><td class="die">d100</td><td>Roll under your skill. The difficulty grade — <em>Easy</em> to <em>Herculean</em> — is declared before the dice fall.</td></tr>
+          <tr><td class="die">⚔</td><td>Combat runs the full Mythras exchange: differential rolls, special effects, hit locations, armour, wounds.</td></tr>
+          <tr><td class="die">✦</td><td>Every roll is returned as auditable JSON. The gamesmaster <strong>cannot</strong> fudge.</td></tr>
+        </tbody>
+      </table>
     </div>
   </section>
 
   <section class="container">
     <div class="grid-3">
       <div class="card accent-ruby">
-        <h3>Play it now</h3>
-        <p>Install the Mythras GM plugin for Claude Code and sit down at a table where the
-        gamemaster never forgets a wound, a debt, or a name. Persistent campaigns in a
-        knowledge graph; honest dice you can audit.</p>
+        <h3>Play It Now</h3>
+        <p>Install the Mythras GM plugin for Claude Code and sit down at a persistent
+        table. Your campaign lives in a knowledge graph — walk away mid-scene, return
+        weeks later, and the GM recaps exactly where you stood.</p>
         <a href="/play/">Get playing →</a>
       </div>
       <div class="card accent-amber">
-        <h3>Not slop</h3>
-        <p>AI-assisted doesn't mean derivative. Read how the Veilwrack was made: its
+        <h3>The Craft</h3>
+        <p>AI-assisted doesn't mean derivative. How the Veilwrack was made: its
         antecedents named honestly, its original ideas defended, and what worldbuilding
         at machine scale actually looks like.</p>
-        <a href="/craft/">The craft →</a>
+        <a href="/craft/">Why this isn't slop →</a>
       </div>
       <div class="card accent-cobalt">
-        <h3>Under the hood</h3>
+        <h3>Behind the Screen</h3>
         <p>A deterministic d100 rules engine, a TypeDB knowledge graph as the save file,
-        and campaigns published as Git repos. Serious engineering for serious play.</p>
-        <a href="/tech/">The tech →</a>
+        and campaigns published as Git repos. Serious engineering in service of the
+        game.</p>
+        <a href="/tech/">How it works →</a>
       </div>
     </div>
   </section>
 
+  <div class="divider">⚔</div>
+
   <section class="container">
-    <h2>Projects</h2>
+    <h2>The Catalogue</h2>
     <div class="grid-3">
       <div class="card">
-        <h3>mythras-gm</h3>
+        <h3>Mythras GM</h3>
         <p>A Claude-powered Gamesmaster for Mythras Imperative. Rules engine, combat
         resolution, character generation, campaign publishing — all persisted in TypeDB.</p>
-        <a href="https://github.com/fourth-wall-gaming/mythras-gm">github.com/fourth-wall-gaming/mythras-gm →</a>
+        <a href="https://github.com/fourth-wall-gaming/mythras-gm">The engine, on GitHub →</a>
       </div>
       <div class="card">
         <h3>The Veilwrack: The Stilling</h3>
         <p>An original sky realm. No ground — winged peoples on the calcified husks of dead
         sky-leviathans, and the wind itself is dying. 46 lore entries, 7 factions, a
         five-act arc.</p>
-        <a href="https://github.com/fourth-wall-gaming/veilwrack-campaign">github.com/fourth-wall-gaming/veilwrack-campaign →</a>
+        <a href="https://github.com/fourth-wall-gaming/veilwrack-campaign">The worldbook, on GitHub →</a>
       </div>
       <div class="card">
         <h3>Gallery</h3>
@@ -69,7 +88,7 @@ import logo from '../assets/logo-full.jpg';
 
   <section class="container mythras-plug">
     <div class="card accent-emerald">
-      <h2 style="margin-top:0">Built on Mythras — get the real game</h2>
+      <h2 style="margin-top:0; border-bottom:none">Built on Mythras — Get the Real Game</h2>
       <p>Everything here runs on the <em>Mythras Imperative</em> SRD under the ORC License.
       Mythras is one of the finest d100 systems ever written: fast, deadly, deeply
       simulationist. If you enjoy playing it with an AI gamemaster, buy the books and
@@ -82,11 +101,48 @@ import logo from '../assets/logo-full.jpg';
   </section>
 
   <style>
-    .hero { text-align: center; padding: 3rem 1.25rem 2rem; }
-    .hero-logo { margin: 0 auto 1.5rem; border-radius: 16px; }
-    .tagline { font-size: 1.2rem; color: var(--text-dim); max-width: 38rem; margin: 0 auto 1.75rem; }
+    .hero { text-align: center; padding: 3.5rem 1.25rem 1rem; }
+    .kicker {
+      font-variant: small-caps;
+      letter-spacing: 0.22em;
+      font-size: 0.95rem;
+      color: var(--text-dim);
+      margin-bottom: 0.25rem;
+    }
+    .hero h1 { margin: 0.25rem 0 0; }
+    .hero .divider { margin: 1.25rem auto; max-width: 18rem; }
+    .tagline {
+      font-size: 1.25rem;
+      color: var(--text);
+      max-width: 38rem;
+      margin: 0 auto 1rem;
+    }
+    .flavor {
+      font-style: italic;
+      color: var(--text-dim);
+      max-width: 34rem;
+      margin: 0 auto 2rem;
+    }
     .hero-actions { display: flex; gap: 0.9rem; justify-content: center; flex-wrap: wrap; }
     section.container { margin-bottom: 2.5rem; }
+    .rules-box { max-width: 44rem; margin: 0 auto; }
+    .rules-head {
+      margin: 0 0 0.75rem;
+      font-variant: small-caps;
+      letter-spacing: 0.06em;
+      font-weight: 700;
+      border-bottom: 2px solid var(--rule);
+      padding-bottom: 0.35rem;
+    }
+    .rules-box table { border-collapse: collapse; width: 100%; }
+    .rules-box td { padding: 0.45rem 0.6rem 0.45rem 0; vertical-align: top; color: var(--text-dim); }
+    .rules-box td.die {
+      font-family: ui-monospace, Menlo, monospace;
+      font-weight: 700;
+      color: var(--ruby);
+      white-space: nowrap;
+      width: 3.5rem;
+    }
     .mythras-plug { margin-top: 1rem; }
   </style>
 </Base>

@@ -16,10 +16,18 @@ const rendered = await Promise.all(
     <h1>Gallery</h1>
     <p class="lede">Art generated alongside the worlds — every piece tied to the canon it illustrates.</p>
 
-    <div class="filters" id="filters">
-      <button data-project="all" class="active">All</button>
-      {projects.map((p) => <button data-project={p}>{p}</button>)}
-    </div>
+    {entries.length === 0 && (
+      <div class="card empty-state">
+        <p><em>The gallery is being hung. First pieces arriving soon.</em></p>
+      </div>
+    )}
+
+    {entries.length > 0 && (
+      <div class="filters" id="filters">
+        <button data-project="all" class="active">All</button>
+        {projects.map((p) => <button data-project={p}>{p}</button>)}
+      </div>
+    )}
 
     <div class="gallery-grid">
       {rendered.map(({ entry, Content }) => (
@@ -37,11 +45,12 @@ const rendered = await Promise.all(
 
   <style>
     .lede { color: var(--text-dim); max-width: 38rem; }
+    .empty-state { max-width: 28rem; margin: 2.5rem auto; text-align: center; }
     .filters { display: flex; gap: 0.5rem; flex-wrap: wrap; margin: 1.5rem 0; }
     .filters button {
       background: var(--bg-raised);
       color: var(--text-dim);
-      border: 1px solid #2a2735;
+      border: 1px solid var(--rule);
       border-radius: 999px;
       padding: 0.35rem 1rem;
       cursor: pointer;
