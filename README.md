@@ -1,37 +1,25 @@
-## Welcome to GitHub Pages
+# fourth-wall-gaming.github.io
 
-You can use the [editor on GitHub](https://github.com/fourth-wall-gaming/fourth-wall-gaming.github.com/edit/main/README.md) to maintain and preview the content for your website in Markdown files.
+The website for **Fourth Wall Gaming** — an open-source agentic gaming studio
+building AI gamemasters, worlds, art, and stories on the Mythras ORC SRDs.
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+Live at <https://fourth-wall-gaming.github.io>.
 
-### Markdown
+## Stack
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+Astro 5 static site, deployed to GitHub Pages via GitHub Actions on every
+push to `main`.
 
-```markdown
-Syntax highlighted code block
+## Develop
 
-# Header 1
-## Header 2
-### Header 3
-
-- Bulleted
-- List
-
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
+```bash
+npm install
+npm run dev      # local dev server
+npm run build    # production build to dist/
 ```
 
-For more details see [Basic writing and formatting syntax](https://docs.github.com/en/github/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax).
+## Content
 
-### Jekyll Themes
-
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/fourth-wall-gaming/fourth-wall-gaming.github.com/settings/pages). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://support.github.com/contact) and we’ll help you sort it out.
+- Pages: `src/pages/` (Play/Craft/Tech are MDX)
+- Gallery: add a markdown file + image under `src/content/gallery/`
+- Design spec: `docs/superpowers/specs/2026-06-12-fourth-wall-gaming-website-design.md`
