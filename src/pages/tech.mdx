@@ -1,0 +1,49 @@
+---
+layout: ../layouts/Prose.astro
+title: Tech
+description: The architecture of an agentic gamemaster — deterministic rules engine, TypeDB knowledge graph as the save file, and campaigns as Git repos.
+---
+
+LLMs are superb narrators and terrible bookkeepers. Ask a large language model to track six characters' hit-location HP across a three-round combat, remember which spire the faction meeting happened on, and keep GM secrets out of the player's context — and you will get confident, plausible, wrong answers. The architecture here splits the two responsibilities: Claude narrates, a deterministic rules engine calculates, and a TypeDB knowledge graph holds the books. Each layer does what it is good at and neither trespasses on the other's domain.
+
+## The deterministic rules engine
+
+`mythras_engine.py` is a pure Python module: no I/O, no database calls, no side effects. It implements Mythras Imperative mechanics as functions that take numbers in and return numbers out. That makes it fully unit-testable in isolation and trivially auditable by anyone who wants to check the math.
+
+The engine handles d100 skill checks with criticals (skill ÷ 10) and fumbles, all seven difficulty grades from Very Easy to Herculean, opposed rolls, and differential rolls including the over-100% skill-value adjustment. Full attack resolution runs in a single CLI call: the differential roll determines how many special effects the winner earns; the engine then computes damage plus the attacker's damage modifier, selects a hit location from the appropriate table (humanoid, winged avianoid, or winged quadruped), reduces the defender's parry size, subtracts armor, and classifies the result as a minor, serious, or major wound. Every call returns JSON that the player can inspect. The GM has no mechanism to fudge a roll — the numbers either come from the CLI or they do not count.
+
+```bash
+mythras_gm.py roll-skill --id myth-char-xxxx --skill Perception --difficulty hard
+```
+
+The CLI layer, `mythras_gm.py`, wraps the engine with twenty-five commands for persistence, encounter management, and worldbuilding. Engine and CLI are separate because the engine's correctness is the ground truth — it must never depend on a database connection.
+
+## The knowledge graph as save file
+
+Game state lives in TypeDB 3.x under the `myth-` namespace schema. The schema models campaigns, characters with per-hit-location HP and per-location armor, the fatigue track, luck points, passions, factions with narrative content and political relationships, locations, active encounters, journal events, and lore entries spanning cosmology, species biology, magic systems, history, and house rules.
+
+At the start of every session, a single command loads the complete state:
+
+`get-context --campaign <id>` returns the current scene, full PC and NPC sheets, faction roster, location list, active encounters, a lore index with titles and categories for the entire worldbook, and the last fifteen journal events. That is the save file. Claude reads it and can recap the situation with full fidelity — not because it remembered, but because the database did.
+
+Lore entries carry a `visibility` field. Entries marked `gm` inform the narrator's decisions but are excluded from the player-facing context: GM secrets stay in the graph, not in the context window. Pulling a specific entry on demand with `get-lore --id <lore-id>` means the worldbook can be arbitrarily large without inflating the token cost of session startup. The GM loads the index, fetches entries as they become relevant, and never exposes what the player hasn't earned.
+
+## Campaigns as Git repos
+
+`export-campaign` serializes an entire campaign to a human-readable file tree. Lore entries, locations, and factions become markdown files with YAML frontmatter. Characters, encounters, and journal entries become JSON. A `campaign.yaml` manifest records campaign metadata, and a README is generated automatically. The output is a plain directory that reads well on GitHub and diffs cleanly in version control.
+
+`import-campaign --new-ids` inverts the operation. It reads the file tree, remaps every entity ID to a fresh identifier, inserts all entities and their attributes, then rebuilds every relation: faction membership, lore links, character presence at locations, encounter rosters, event involvement. The round trip is lossless — no relation is dropped, no narrative field is truncated. Publishing a campaign world is `git push`. Loading someone else's is `git clone` followed by a single import command.
+
+The reference campaign, [The Veilwrack: The Stilling](https://github.com/fourth-wall-gaming/veilwrack-campaign), ships forty-six lore entries, ten-plus characters, seven factions, and a five-act arc in a repo that loads into any TypeDB instance with one command.
+
+## Plugin architecture
+
+The system runs as a Claude Code plugin. The `alhazen-core` dependency handles infrastructure: it starts TypeDB via Docker Compose and loads the base schema that establishes the shared namespace (`identifiable-entity`, `domain-thing`, `collection`, and the note hierarchy). The `mythras-gm` plugin installs on top of it. A SessionStart hook fires at the beginning of every Claude Code session and loads the `myth-` namespace schema into the running TypeDB instance — so the GM is always working against a current schema without any manual setup step.
+
+The skill itself is a slim `SKILL.md` with the quick-start operating rules, backed by a complete `USAGE.md` command reference that Claude loads on demand. Twenty-five commands with argument tables and resolution notes would inflate every turn's context cost if carried permanently. The GM reads the reference at session start and fetches details as needed.
+
+The code is MIT-licensed. The game mechanics are based on the Mythras Imperative SRD and used under the ORC License.
+
+---
+
+The source is at [github.com/fourth-wall-gaming/mythras-gm](https://github.com/fourth-wall-gaming/mythras-gm). To see it running, go to [Play](/play/).
