@@ -19,18 +19,18 @@ No Python or database knowledge required — the plugins handle everything.
 Inside Claude Code, run:
 
 ```
-/plugin marketplace add sciknow-io/alhazen-skill-examples
-/plugin install alhazen-core@alhazen-skills
+/plugin marketplace add sciknow-io/skillful-alhazen
+/plugin install alhazen-core@skillful-alhazen
 /alhazen-core:init
 ```
 
-This starts TypeDB in Docker and loads the base schema.
+This starts TypeDB **and** a web dashboard in Docker — the dashboard lives at [http://localhost:3001](http://localhost:3001) — and loads the base schema. `init` is idempotent, so it's safe to re-run.
 
 ## Step 2 — Install the Mythras GM
 
 ```
 /plugin marketplace add fourth-wall-gaming/mythras-gm
-/plugin install mythras-gm
+/plugin install mythras-gm@fourth-wall-gaming
 ```
 
 ## Step 3 — Load a campaign (or build your own)
