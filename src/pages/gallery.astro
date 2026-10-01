@@ -14,7 +14,53 @@ const rendered = await Promise.all(
 <Base title="Gallery · Fourth Wall Gaming" description="AI-generated art, film, and comics from Fourth Wall Gaming worlds.">
   <div class="container">
     <h1>Gallery</h1>
-    <p class="lede">Art generated alongside the worlds — every piece tied to the canon it illustrates.</p>
+    <p class="lede">
+      What the games left behind — the novels written out of played sessions, and the art generated
+      alongside the worlds. Every piece is tied to the canon it illustrates.
+    </p>
+
+    <h2 class="section-head">Novelizations</h2>
+    <p class="section-note">
+      Each of these was a played session before it was prose. The dice had already fallen; the book
+      is written afterwards from the campaign's own journal and play transcript, so the plot is
+      whatever the players actually did with it. Read them as records, not as fiction written to a
+      plan.
+    </p>
+    <ul class="novels">
+
+      <li class="card novel">
+        <h3><a href="https://github.com/fourth-wall-gaming/veilwrack-campaign/blob/playthroughs/novels/sefa-rocksquill/the-veilwrack-the-stilling.pdf">The Kestrel of Lanternfall</a></h3>
+        <p class="meta">The Veilwrack · Sefa Rocksquill · 38 pages</p>
+        <p>The sky-realm on the bone-spires of dead leviathans, and the wind itself failing. Three
+        chapters from the opening run — the ninth night, the last supper, the closed hand.</p>
+      </li>
+
+      <li class="card novel">
+        <h3><a href="https://github.com/fourth-wall-gaming/purewater-campaign/blob/playthroughs/novels/and-then-the-dragons-came-purewater/and-then-the-dragons-came-purewater.pdf">And Then the Dragons Came: Purewater</a></h3>
+        <p class="meta">Purewater · Magda · 72 pages</p>
+        <p>A seventy-year-old pilgrim of Hel walks three hundred miles into a canal city on the eve
+        of the Lake Lady's Tourney, carrying a quarterstaff and eleven nights of the same dream.</p>
+        <p class="also">Also as <a href="https://github.com/fourth-wall-gaming/purewater-campaign/blob/playthroughs/novels/and-then-the-dragons-came-purewater-authors-cut/and-then-the-dragons-came-purewater-authors-cut.pdf">the Author's Cut</a> — the same play at 174 pages in a different prose voice, which is the clearest look at what the style setting actually does.</p>
+      </li>
+
+      <li class="card novel">
+        <h3><a href="https://github.com/fourth-wall-gaming/purewater-campaign/blob/playthroughs/novels/purewater-kag-run-4/purewater-kag-run-4.pdf">The Short Ledger</a></h3>
+        <p class="meta">Purewater · Kag · 113 pages</p>
+        <p>The same city from underneath: a collector working the water-stairs for the local crime
+        lord, and a ledger that does not add up. Dialogue lifted from the play transcript rather
+        than paraphrased from the journal.</p>
+      </li>
+
+      <li class="card novel">
+        <h3><a href="/novels/the-wrong-cathedral.pdf">The Wrong Cathedral</a></h3>
+        <p class="meta">GoblinPak · Vek and Vosh · 168 pages</p>
+        <p>Gobtown, the first goblinoid city that works, held together by deals nobody has read all
+        of. Two goblins, nine chapters, and a rent problem.</p>
+      </li>
+
+    </ul>
+
+    <h2 class="section-head">Art</h2>
 
     {entries.length === 0 && (
       <div class="card empty-state">
@@ -45,6 +91,17 @@ const rendered = await Promise.all(
 
   <style>
     .lede { color: var(--text-dim); max-width: 38rem; }
+    .section-head { margin-top: 3rem; }
+    .section-note { color: var(--text-dim); max-width: 42rem; font-size: 0.95rem; }
+    .novels { list-style: none; padding: 0; margin: 1.5rem 0 0; display: grid; gap: 1.25rem;
+              grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr)); }
+    .novel { padding: 1.25rem 1.4rem; }
+    .novel h3 { margin: 0 0 0.3rem; font-size: 1.15rem; }
+    .novel .meta { font-size: 0.8rem; color: var(--text-dim); text-transform: uppercase;
+                   letter-spacing: 0.05em; margin: 0 0 0.6rem; }
+    .novel p { font-size: 0.95rem; color: var(--text-dim); margin: 0 0 0.6rem; }
+    .novel p:last-child { margin-bottom: 0; }
+    .novel .also { font-size: 0.875rem; border-top: 1px solid var(--rule); padding-top: 0.6rem; }
     .empty-state { max-width: 28rem; margin: 2.5rem auto; text-align: center; }
     .filters { display: flex; gap: 0.5rem; flex-wrap: wrap; margin: 1.5rem 0; }
     .filters button {
