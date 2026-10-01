@@ -150,30 +150,19 @@ import Base from '../layouts/Base.astro';
       command, the database becomes the game — and the database is on disk, at
       <code>~/.claude/mythras-gm/typedb/data</code>.
     </p>
-    <div class="tablewrap">
-      <table>
-        <thead>
-          <tr><th scope="col">Where you play</th><th scope="col">What happens to the save</th></tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Your own machine</td>
-            <td>Persists indefinitely. Close the laptop, come back in a month, pick up mid-scene.</td>
-          </tr>
-          <tr>
-            <td>A cloud session</td>
-            <td>Lives only as long as that session's container. A new session starts with an empty database and no campaign.</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+    <p>
+      That path is the campaign, and it persists for as long as the disk does. Close the laptop, come
+      back in a month, pick up mid-scene. If you would rather keep it somewhere you actually back up,
+      set <code>MYTHRAS_TYPEDB_HOME</code> — the server binary, its log and the data directory all
+      move together, because a data directory that outlives its binary is just another way to lose
+      the save.
+    </p>
     <div class="callout">
-      <span class="eyebrow">Worth knowing before you invest an evening</span>
+      <span class="eyebrow">Play on your own machine</span>
       <p>
-        If you play in a disposable cloud environment, the campaign does not survive it. You'll be told
-        the campaign "has not been imported yet" — which is true, and reads exactly like a fresh
-        install rather than a lost one. Play on a machine that keeps its disk, or export the campaign
-        to a folder you control before the session ends.
+        This is a local game. The engine is brought up by a <code>SessionStart</code> hook, and that
+        hook does not fire in hosted or disposable environments — so nothing creates the database,
+        and there is no save to come back to.
       </p>
     </div>
 
