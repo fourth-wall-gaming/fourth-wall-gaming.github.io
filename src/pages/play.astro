@@ -1,0 +1,514 @@
+---
+import Base from '../layouts/Base.astro';
+---
+<Base
+  title="Play · Fourth Wall Gaming"
+  description="Run your first session — install the Mythras GM plugin for Claude Code, pick a campaign, and open the first scene. With a way to check each step actually worked."
+>
+  <article class="prose play">
+
+    <header class="masthead">
+      <p class="kicker">Mythras GM · Claude Code</p>
+      <h1>Run Your First Session</h1>
+      <p class="standfirst">
+        Claude as your Gamesmaster, running Mythras Imperative with a real dice engine and every
+        wound, faction and journal entry persisted in a knowledge graph. This page takes you from
+        nothing to an open scene — <em>and tells you how to check each step actually worked.</em>
+      </p>
+    </header>
+
+    <h2>Before You Start</h2>
+    <p>Three things. Two of them you probably already have.</p>
+    <div class="prereqs">
+      <div class="card prereq">
+        <span class="eyebrow">Required</span>
+        <strong class="val">Claude Code</strong>
+        <span class="note">The engine ships as a plugin, so everything below is typed at a <a href="https://claude.ai/code">Claude Code</a> prompt.</span>
+      </div>
+      <div class="card prereq">
+        <span class="eyebrow">Required</span>
+        <strong class="val">uv</strong>
+        <span class="note">The CLI runs under <a href="https://docs.astral.sh/uv/">uv</a>. Without it there is no dice tower and no save file.</span>
+      </div>
+      <div class="card prereq">
+        <span class="eyebrow">Handled for you</span>
+        <strong class="val">TypeDB 3.8</strong>
+        <span class="note">Fetched once on first run — about 25&nbsp;MB, self‑contained, no Docker and no JVM.</span>
+      </div>
+    </div>
+    <p class="small">
+      Native builds cover macOS and Linux on x86_64 or arm64, and Windows on x86_64. Anywhere else,
+      the engine can run its database under Docker instead — see <code>/mythras-gm:setup</code>.
+    </p>
+
+    <h2>Install, One Step at a Time</h2>
+    <p>
+      Install the engine explicitly and first. Campaigns declare it as a dependency, but do not
+      rely on that resolving for you — when it silently doesn't, the campaign's own diagnostics
+      go down with it, and you get a plugin that simply isn't there rather than an error.
+    </p>
+
+    <div class="switch" role="group" aria-label="Choose a campaign">
+      <span class="switch-label">Campaign</span>
+      <button class="pill" type="button" data-camp="purewater" aria-pressed="true">Purewater</button>
+      <button class="pill" type="button" data-camp="veilwrack" aria-pressed="false">Veilwrack</button>
+    </div>
+
+    <ol class="steps">
+
+      <li class="step">
+        <h3>Add the marketplace</h3>
+        <p>One source holds the engine and every campaign.</p>
+        <div class="cmd">
+          <pre id="marketplace"><code>/plugin marketplace add fourth-wall-gaming/mythras-gm</code></pre>
+          <button class="copy" type="button" data-copy="marketplace">Copy</button>
+        </div>
+        <div class="confirm">
+          <span class="eyebrow">Confirm</span>
+          <p>The marketplace lists three plugins: <code>mythras-gm</code>, <code>purewater</code> and <code>veilwrack</code>. If you see fewer, stop here rather than continuing.</p>
+        </div>
+      </li>
+
+      <li class="step">
+        <h3>Install the engine</h3>
+        <p>This is the dice tower, the rules graph and the save file. Nothing else works without it.</p>
+        <div class="cmd">
+          <pre id="engine"><code>/plugin install mythras-gm@fourth-wall-gaming</code></pre>
+          <button class="copy" type="button" data-copy="engine">Copy</button>
+        </div>
+        <div class="confirm">
+          <span class="eyebrow">Confirm</span>
+          <p><strong>mythras-gm</strong> appears in your installed plugins. Do not move on until it does.</p>
+        </div>
+      </li>
+
+      <li class="step">
+        <h3>Install a campaign</h3>
+        <p>
+          Pick one. <span data-camp-prose="purewater">Purewater is a Classic Fantasy port — a canal city, three days before a tournament.</span><span data-camp-prose="veilwrack" hidden>The Veilwrack is an original sky realm — winged peoples on floating bone-spires, and the wind is dying.</span>
+          You can install both and keep two saves side by side.
+        </p>
+        <div class="cmd">
+          <pre id="campaign"><code>/plugin install <span data-camp-cmd>purewater</span>@fourth-wall-gaming</code></pre>
+          <button class="copy" type="button" data-copy="campaign">Copy</button>
+        </div>
+        <div class="confirm">
+          <span class="eyebrow">Confirm</span>
+          <p>Both <strong>mythras-gm</strong> and <strong data-camp-name>purewater</strong> are installed. Two plugins, not one.</p>
+        </div>
+      </li>
+
+      <li class="step">
+        <h3>Start a fresh session and read the first line</h3>
+        <p>
+          Both plugins check the game at session start, so quit Claude Code and open it again.
+          The preflight tells you exactly where you stand — it never imports anything and never
+          blocks the session, so whatever it says is safe to act on.
+        </p>
+        <div class="confirm">
+          <span class="eyebrow">Confirm — one of these</span>
+          <p><code>…installed but has not been imported into the database yet</code> — expected on a first run. Continue to step&nbsp;5.</p>
+          <p><code>the mythras-gm engine is not installed</code> — step&nbsp;2 didn't take. Run it again.</p>
+          <p><code>PREFLIGHT FAILED — uv is not installed</code> — install <a href="https://docs.astral.sh/uv/">uv</a>, then start another session.</p>
+        </div>
+      </li>
+
+      <li class="step">
+        <h3>Open the scenario</h3>
+        <p>
+          This imports the campaign, briefs you on Mythras if you're new to it, walks you through
+          choosing or rolling a character, and opens the first scene. Run it once, ever.
+        </p>
+        <div class="cmd">
+          <pre id="start"><code>/<span data-camp-cmd>purewater</span>:start</code></pre>
+          <button class="copy" type="button" data-copy="start">Copy</button>
+        </div>
+        <div class="confirm">
+          <span class="eyebrow">Confirm</span>
+          <p>You are asked whether you've played Mythras before, and then offered characters. If instead the narration simply begins, something didn't import — see below.</p>
+        </div>
+      </li>
+
+      <li class="step">
+        <h3>Every session after that</h3>
+        <p>One command, forever. The preflight will have already told you the clock and session number.</p>
+        <div class="cmd">
+          <pre id="play"><code>/mythras-gm:play</code></pre>
+          <button class="copy" type="button" data-copy="play">Copy</button>
+        </div>
+        <div class="confirm">
+          <span class="eyebrow">Confirm</span>
+          <p><code>a game is in progress</code> — with your campaign's clock and session number. Never run the start command again; it is only for a campaign that has not begun.</p>
+        </div>
+      </li>
+
+    </ol>
+
+    <h2>Where Your Save Lives</h2>
+    <p>
+      The files in a campaign plugin are a scenario seed, not a save. The moment you run the start
+      command, the database becomes the game — and the database is on disk, at
+      <code>~/.claude/mythras-gm/typedb/data</code>.
+    </p>
+    <div class="tablewrap">
+      <table>
+        <thead>
+          <tr><th scope="col">Where you play</th><th scope="col">What happens to the save</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Your own machine</td>
+            <td>Persists indefinitely. Close the laptop, come back in a month, pick up mid-scene.</td>
+          </tr>
+          <tr>
+            <td>A cloud session</td>
+            <td>Lives only as long as that session's container. A new session starts with an empty database and no campaign.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="callout">
+      <span class="eyebrow">Worth knowing before you invest an evening</span>
+      <p>
+        If you play in a disposable cloud environment, the campaign does not survive it. You'll be told
+        the campaign "has not been imported yet" — which is true, and reads exactly like a fresh
+        install rather than a lost one. Play on a machine that keeps its disk, or export the campaign
+        to a folder you control before the session ends.
+      </p>
+    </div>
+
+    <h2>When Something Is Wrong, It Will Be Quiet About It</h2>
+    <p>
+      The characteristic failure here is not a crash. It's a database that isn't there, or a schema
+      that never loaded, while the game carries on narrating over the top of it. Learn the tells.
+    </p>
+    <ul class="symptoms">
+      <li>Nothing is printed at session start. Both plugins always say something; silence means neither hook ran.</li>
+      <li>The GM narrates straight into a scene without offering you a character.</li>
+      <li>A wound, a spent luck point or a journal entry from last session has quietly reverted.</li>
+      <li>Dice results appear in the prose but no roll is reported.</li>
+    </ul>
+    <p>One command answers all of them. It checks the install end to end and reports every stage as pass or fail, in order:</p>
+    <div class="cmd">
+      <pre id="setup"><code>/mythras-gm:setup</code></pre>
+      <button class="copy" type="button" data-copy="setup">Copy</button>
+    </div>
+    <div class="confirm">
+      <span class="eyebrow">Confirm</span>
+      <p>Every check reads true, ending in <code>Ready.</code> Any check that reads false is named, with the reason attached.</p>
+    </div>
+
+    <h2>Two Campaigns, and a Word About Spoilers</h2>
+    <div class="campaigns">
+      <div class="card accent-ruby camp">
+        <span class="eyebrow">Classic Fantasy</span>
+        <h3>And Then the Dragons Came: Purewater</h3>
+        <p>
+          A canal city where the Lake Lady's waters meet the sea. Baron Hanzo di Teufel has arrived
+          for the Tourney with a champion nobody is allowed to see, and there are three days left
+          before it all goes wrong.
+        </p>
+        <span class="stat">4 entry points · 42 characters · 15 agendas on clocks</span>
+      </div>
+      <div class="card accent-cobalt camp">
+        <span class="eyebrow">Original setting</span>
+        <h3>The Veilwrack: The Stilling</h3>
+        <p>
+          No ground — an endless sky above the toxic Undermist. The winged Alar live on the
+          floating bone-spires of dead sky-leviathans, and Lanternfall's windlane began Stilling this
+          season. Nobody has said the word aloud yet.
+        </p>
+        <span class="stat">4 spires · 7 factions · 3 playable Alar</span>
+      </div>
+    </div>
+    <div class="callout">
+      <span class="eyebrow">If you intend to play rather than run</span>
+      <p>
+        Don't browse the campaign repositories. They are the published source of the scenario, so
+        they hold the Gamesmaster's material — the secrets, the timeline and who everyone
+        actually is. Much of it is marked GM-only, but not all of it, and a scenario is easy to spoil
+        by accident. Install the plugin and let the game show you. Both worlds are built so that what
+        you don't witness happens anyway, which only works if you haven't read ahead.
+      </p>
+    </div>
+
+    <h2>Love the System? Buy the Books</h2>
+    <p>
+      This runs on the <em>Mythras Imperative</em> SRD under the ORC License.
+      <a href="https://thedesignmechanism.com">The Design Mechanism</a> publishes the full
+      <em>Mythras</em> line — get the real thing and play it at a real table too.
+    </p>
+
+  </article>
+
+  <div class="toast" id="toast" role="status" aria-live="polite">Copied</div>
+
+  <style>
+    /* ---------- masthead ---------- */
+    .masthead { margin-bottom: 1rem; }
+    .kicker {
+      font-variant: small-caps;
+      letter-spacing: 0.22em;
+      font-size: 0.95rem;
+      color: var(--text-dim);
+      margin: 0 0 0.25rem;
+    }
+    .masthead h1 { margin: 0 0 0.75rem; }
+    .standfirst {
+      font-size: 1.15rem;
+      color: var(--text-dim);
+      margin: 0;
+    }
+    .standfirst em { color: var(--text); }
+
+    .small { font-size: 0.9rem; }
+
+    .eyebrow {
+      display: block;
+      font-variant: small-caps;
+      letter-spacing: 0.1em;
+      font-weight: 700;
+      font-size: 0.85rem;
+      color: var(--text-dim);
+    }
+
+    /* ---------- prerequisites ---------- */
+    .prereqs {
+      display: grid;
+      gap: 1rem;
+      grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+      margin: 1.25rem 0;
+    }
+    .prereq { padding: 1rem 1.1rem 1.1rem; display: flex; flex-direction: column; gap: 0.25rem; }
+    .prereq .val { font-size: 1.15rem; font-variant: small-caps; letter-spacing: 0.03em; color: var(--text); }
+    .prereq .note { font-size: 0.9rem; color: var(--text-dim); line-height: 1.5; }
+
+    /* ---------- campaign switch ---------- */
+    .switch { display: flex; align-items: center; flex-wrap: wrap; gap: 0.5rem; margin: 1.5rem 0 1rem; }
+    .switch-label {
+      font-variant: small-caps;
+      letter-spacing: 0.08em;
+      font-weight: 700;
+      color: var(--text-dim);
+      margin-right: 0.35rem;
+    }
+    .pill {
+      appearance: none;
+      cursor: pointer;
+      font: inherit;
+      font-variant: small-caps;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      font-size: 0.95rem;
+      padding: 0.35rem 1rem;
+      border-radius: 2px;
+      background: var(--bg-raised);
+      border: 2px solid var(--rule-strong);
+      color: var(--text);
+    }
+    .pill:hover { border-color: var(--ruby); color: var(--ruby); }
+    .pill[aria-pressed="true"] {
+      background: var(--ruby);
+      border-color: #4d130c;
+      color: var(--bg-raised);
+    }
+
+    /* ---------- steps ---------- */
+    .steps {
+      list-style: none;
+      counter-reset: step;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+    .step {
+      counter-increment: step;
+      position: relative;
+      padding-left: 3.25rem;
+    }
+    .step::before {
+      content: counter(step, decimal-leading-zero);
+      position: absolute;
+      left: 0;
+      top: 0.15rem;
+      font-family: ui-monospace, "SF Mono", Menlo, monospace;
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: var(--ruby);
+    }
+    .step h3 {
+      margin: 0 0 0.4rem;
+      font-size: 1.25rem;
+      font-variant: small-caps;
+      letter-spacing: 0.03em;
+    }
+    .step > p { margin: 0 0 0.75rem; }
+    @media (max-width: 30rem) {
+      .step { padding-left: 0; padding-top: 1.5rem; }
+    }
+
+    /* ---------- command block ---------- */
+    .cmd { position: relative; margin: 0.75rem 0 0; }
+    .cmd pre { margin: 0; padding-right: 4.5rem; }
+    .copy {
+      position: absolute;
+      top: 0.55rem;
+      right: 0.55rem;
+      appearance: none;
+      cursor: pointer;
+      font: inherit;
+      font-variant: small-caps;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      font-size: 0.8rem;
+      padding: 0.15rem 0.6rem;
+      border-radius: 2px;
+      background: transparent;
+      border: 1px solid var(--rule);
+      color: var(--text-dim);
+    }
+    .copy:hover { border-color: var(--ruby); color: var(--ruby); }
+
+    /* ---------- confirm strip ---------- */
+    .confirm {
+      margin-top: 0.75rem;
+      border-left: 4px solid var(--emerald);
+      background: color-mix(in srgb, var(--emerald) 9%, var(--bg-raised));
+      padding: 0.65rem 0.9rem 0.7rem;
+      border-radius: 0 2px 2px 0;
+    }
+    .confirm .eyebrow { color: var(--emerald); margin-bottom: 0.2rem; }
+    .confirm p { margin: 0; font-size: 0.92rem; line-height: 1.5; }
+    .confirm p + p { margin-top: 0.4rem; }
+
+    /* ---------- callout ---------- */
+    .callout {
+      margin: 1.25rem 0 0;
+      background: var(--bg-raised);
+      border: 1px solid var(--rule);
+      border-left: 4px solid var(--amber);
+      border-radius: 2px;
+      padding: 1rem 1.15rem 1.05rem;
+    }
+    .callout .eyebrow { color: var(--amber); margin-bottom: 0.3rem; }
+    .callout p { margin: 0; font-size: 0.95rem; }
+
+    /* ---------- table ---------- */
+    .tablewrap { overflow-x: auto; margin-top: 1rem; }
+    table { border-collapse: collapse; width: 100%; min-width: 28rem; font-size: 0.95rem; }
+    th, td {
+      text-align: left;
+      padding: 0.6rem 0.75rem;
+      border-bottom: 1px solid var(--rule);
+      vertical-align: top;
+      color: var(--text-dim);
+    }
+    th {
+      font-variant: small-caps;
+      letter-spacing: 0.08em;
+      font-size: 0.85rem;
+      color: var(--text);
+      border-bottom: 2px solid var(--rule-strong);
+    }
+    td:first-child { font-weight: 700; color: var(--text); white-space: nowrap; }
+
+    /* ---------- symptoms ---------- */
+    .symptoms { padding-left: 0; list-style: none; margin: 1rem 0 1.25rem; }
+    .symptoms li {
+      position: relative;
+      padding-left: 1.6rem;
+      margin-bottom: 0.6rem;
+    }
+    .symptoms li::before {
+      content: '✦';
+      position: absolute;
+      left: 0;
+      color: var(--amber);
+    }
+
+    /* ---------- campaign cards ---------- */
+    .campaigns {
+      display: grid;
+      gap: 1.25rem;
+      grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+      margin-top: 1.25rem;
+    }
+    .camp { display: flex; flex-direction: column; gap: 0.4rem; }
+    .camp h3 { margin: 0.1rem 0 0.25rem; }
+    .camp p { margin: 0; font-size: 0.95rem; }
+    .camp .stat {
+      margin-top: auto;
+      padding-top: 0.75rem;
+      font-family: ui-monospace, "SF Mono", Menlo, monospace;
+      font-size: 0.78rem;
+      color: var(--text-dim);
+      border-top: 1px solid var(--rule);
+    }
+
+    /* ---------- toast ---------- */
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 1.25rem;
+      transform: translateX(-50%);
+      background: var(--text);
+      color: var(--bg-raised);
+      font-variant: small-caps;
+      letter-spacing: 0.06em;
+      font-weight: 700;
+      font-size: 0.9rem;
+      padding: 0.45rem 1rem;
+      border-radius: 2px;
+      opacity: 0;
+      transition: opacity .18s;
+      pointer-events: none;
+      z-index: 20;
+    }
+    .toast.show { opacity: 1; }
+    @media (prefers-reduced-motion: reduce) { .toast { transition: none; } }
+  </style>
+
+  <script>
+    const pills = Array.from(document.querySelectorAll<HTMLButtonElement>('.pill[data-camp]'));
+
+    function select(key: string) {
+      pills.forEach((p) => p.setAttribute('aria-pressed', String(p.dataset.camp === key)));
+      document.querySelectorAll<HTMLElement>('[data-camp-cmd], [data-camp-name]').forEach((el) => {
+        el.textContent = key;
+      });
+      document.querySelectorAll<HTMLElement>('[data-camp-prose]').forEach((el) => {
+        el.hidden = el.dataset.campProse !== key;
+      });
+    }
+
+    pills.forEach((p) => p.addEventListener('click', () => select(p.dataset.camp!)));
+
+    const toast = document.getElementById('toast');
+    let toastTimer: ReturnType<typeof setTimeout> | undefined;
+    function flash(msg: string) {
+      if (!toast) return;
+      toast.textContent = msg;
+      toast.classList.add('show');
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => toast.classList.remove('show'), 1400);
+    }
+
+    document.querySelectorAll<HTMLButtonElement>('.copy[data-copy]').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const target = document.getElementById(btn.dataset.copy!);
+        if (!target) return;
+        const text = target.textContent?.trim() ?? '';
+        if (navigator.clipboard?.writeText) {
+          navigator.clipboard.writeText(text).then(
+            () => flash('Copied'),
+            () => flash('Press ⌘C to copy'),
+          );
+        } else {
+          flash('Press ⌘C to copy');
+        }
+      });
+    });
+  </script>
+</Base>
