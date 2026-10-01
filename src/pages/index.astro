@@ -59,6 +59,27 @@ import Base from '../layouts/Base.astro';
     </div>
   </section>
 
+  <section class="container talk-section">
+    <div class="card talk">
+      <p class="kicker-sm">The Talk · LLM-Day San Francisco · 1 October 2026</p>
+      <h2>Claude Opus as a Tabletop Roleplaying Gamesmaster</h2>
+      <p>
+        What it takes to run Mythras Imperative inside a language model, and why a model on its own
+        will not do it: a universal rules engine that rolls honestly, a living world of NPC agendas
+        on clocks that turn whether or not you are watching, and an epistemics layer where what each
+        character knows is a projection from one shared source of truth.
+      </p>
+      <p class="talk-links">
+        <a class="btn btn-primary" href="/prez/world-model-with-a-voice/">Read the slides</a>
+        <a class="btn btn-ghost" href="/prez/world-model-with-a-voice/world-model-with-a-voice.pdf">PDF, 25 pages</a>
+      </p>
+      <p class="small-note">
+        The slides are live — arrow keys move through them, and one of them replays a real scene of
+        play as it was typed at the table.
+      </p>
+    </div>
+  </section>
+
   <div class="divider">⚔</div>
 
   <section class="container">
@@ -144,5 +165,17 @@ import Base from '../layouts/Base.astro';
       width: 3.5rem;
     }
     .mythras-plug { margin-top: 1rem; }
+    .talk { max-width: 44rem; margin: 0 auto; }
+    .talk h2 { margin: 0.2rem 0 0.75rem; border-bottom: none; }
+    .kicker-sm {
+      font-variant: small-caps;
+      letter-spacing: 0.14em;
+      font-size: 0.85rem;
+      color: var(--text-dim);
+      margin: 0;
+    }
+    .talk p { color: var(--text-dim); }
+    .talk-links { display: flex; gap: 0.9rem; flex-wrap: wrap; margin: 1.25rem 0 0; }
+    .small-note { font-size: 0.875rem; font-style: italic; margin: 1rem 0 0; }
   </style>
 </Base>
