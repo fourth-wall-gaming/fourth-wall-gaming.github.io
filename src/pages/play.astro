@@ -52,6 +52,7 @@ import Base from '../layouts/Base.astro';
       <span class="switch-label">Campaign</span>
       <button class="pill" type="button" data-camp="purewater" aria-pressed="true">Purewater</button>
       <button class="pill" type="button" data-camp="veilwrack" aria-pressed="false">Veilwrack</button>
+      <button class="pill" type="button" data-camp="first-through" aria-pressed="false">First Through</button>
     </div>
 
     <ol class="steps">
@@ -65,7 +66,7 @@ import Base from '../layouts/Base.astro';
         </div>
         <div class="confirm">
           <span class="eyebrow">Confirm</span>
-          <p>The marketplace lists three plugins: <code>mythras-gm</code>, <code>purewater</code> and <code>veilwrack</code>. If you see fewer, stop here rather than continuing.</p>
+          <p>The marketplace lists four plugins: <code>mythras-gm</code>, <code>purewater</code>, <code>veilwrack</code> and <code>first-through</code>. If you see fewer, stop here rather than continuing.</p>
         </div>
       </li>
 
@@ -85,7 +86,7 @@ import Base from '../layouts/Base.astro';
       <li class="step">
         <h3>Install a campaign</h3>
         <p>
-          Pick one. <span data-camp-prose="purewater">Purewater is a Classic Fantasy port — a canal city, three days before a tournament.</span><span data-camp-prose="veilwrack" hidden>The Veilwrack is an original sky realm — winged peoples on floating bone-spires, and the wind is dying.</span>
+          Pick one. <span data-camp-prose="purewater">Purewater is a Classic Fantasy port — a canal city, three days before a tournament.</span><span data-camp-prose="veilwrack" hidden>The Veilwrack is an original sky realm — winged peoples on floating bone-spires, and the wind is dying.</span><span data-camp-prose="first-through" hidden>First Through is science fiction written for a first-time player — instant doors between real stars, and only the young can use them.</span>
           You can install both and keep two saves side by side.
         </p>
         <div class="cmd">
@@ -187,7 +188,7 @@ import Base from '../layouts/Base.astro';
       <p>Every check reads true, ending in <code>Ready.</code> Any check that reads false is named, with the reason attached.</p>
     </div>
 
-    <h2>Two Campaigns, and a Word About Spoilers</h2>
+    <h2>Three Campaigns, and a Word About Spoilers</h2>
     <div class="campaigns">
       <div class="card accent-ruby camp">
         <span class="eyebrow">Classic Fantasy</span>
@@ -209,15 +210,33 @@ import Base from '../layouts/Base.astro';
         </p>
         <span class="stat">4 spires · 7 factions · 3 playable Alar</span>
       </div>
+      <div class="card accent-emerald camp">
+        <span class="eyebrow">A first roleplaying game</span>
+        <h3>First Through</h3>
+        <p>
+          Instant doors between real stars, and only the young can use them, so the whole traffic
+          of human space rides on fifteen-year-olds. Written for ten- to fifteen-year-olds, with no
+          pre-made characters — you build your own at the table in about twenty minutes.
+        </p>
+        <span class="stat">6 cultures · 6 careers · Act One in one sitting</span>
+      </div>
     </div>
     <div class="callout">
       <span class="eyebrow">If you intend to play rather than run</span>
       <p>
         Don't browse the campaign repositories. They are the published source of the scenario, so
-        they hold the Gamesmaster's material — the secrets, the timeline and who everyone
-        actually is. Much of it is marked GM-only, but not all of it, and a scenario is easy to spoil
-        by accident. Install the plugin and let the game show you. Both worlds are built so that what
-        you don't witness happens anyway, which only works if you haven't read ahead.
+        they hold the Gamesmaster's material — the secrets, the timeline and who everyone actually
+        is. Much of it is marked GM-only, but not all of it, and a scenario is easy to spoil by
+        accident. Every world here is built so that what you don't witness happens anyway, which
+        only works if you haven't read ahead.
+      </p>
+      <p>
+        Purewater and First Through each publish a <strong>Players' Guide</strong> written for
+        exactly this: everything your character already knows, and nothing your Gamesmaster
+        needs. Read those instead —
+        <a href="https://fourth-wall-gaming.github.io/purewater-campaign/players/">Purewater's</a>
+        and
+        <a href="https://fourth-wall-gaming.github.io/first-through-campaign/players/">First Through's</a>.
       </p>
     </div>
 

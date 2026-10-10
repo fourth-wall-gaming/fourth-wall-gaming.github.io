@@ -15,50 +15,12 @@ import Base from '../layouts/Base.astro';
       You speak; the world answers. The dice are honest, and the ledger is kept.
     </p>
     <div class="hero-actions">
-      <a class="btn btn-primary" href="/play/">Roll Initiative</a>
-      <a class="btn btn-ghost" href="/tech/">Read the Rules</a>
+      <a class="btn btn-primary" href="#campaigns">The three campaigns</a>
+      <a class="btn btn-ghost" href="/prez/world-model-with-a-voice/">Read the talk</a>
     </div>
   </section>
 
-  <section class="container">
-    <div class="rules-box card">
-      <p class="rules-head">How a check resolves at this table</p>
-      <table>
-        <tbody>
-          <tr><td class="die">d100</td><td>Roll under your skill. The difficulty grade — <em>Easy</em> to <em>Herculean</em> — is declared before the dice fall.</td></tr>
-          <tr><td class="die">⚔</td><td>Combat runs the full Mythras exchange: differential rolls, special effects, hit locations, armour, wounds.</td></tr>
-          <tr><td class="die">✦</td><td>Every roll is returned as auditable JSON. The gamesmaster <strong>cannot</strong> fudge.</td></tr>
-        </tbody>
-      </table>
-    </div>
-  </section>
-
-  <section class="container">
-    <div class="grid-3">
-      <div class="card accent-ruby">
-        <h3>Play It Now</h3>
-        <p>Install the Mythras GM plugin for Claude Code, pick a campaign — Purewater or
-        the Veilwrack — and open the first scene. Your campaign lives in a knowledge graph:
-        walk away mid-scene, return weeks later, and the GM recaps exactly where you stood.</p>
-        <a href="/play/">Run your first session →</a>
-      </div>
-      <div class="card accent-amber">
-        <h3>Creating Veilwrack</h3>
-        <p>AI-assisted doesn't mean derivative. How the Veilwrack was made: its
-        antecedents named honestly, its original ideas defended, and what worldbuilding
-        at machine scale actually looks like.</p>
-        <a href="/craft/">Why this isn't slop →</a>
-      </div>
-      <div class="card accent-cobalt">
-        <h3>Behind the Screen</h3>
-        <p>A deterministic d100 rules engine, a TypeDB knowledge graph as the save file,
-        and campaigns published as Git repos. Serious engineering in service of the
-        game.</p>
-        <a href="/tech/">How it works →</a>
-      </div>
-    </div>
-  </section>
-
+  <!-- The talk, first: it is the clearest single explanation of what this is. -->
   <section class="container talk-section">
     <div class="card talk">
       <p class="kicker-sm">The Talk · LLM-Day San Francisco · 1 October 2026</p>
@@ -75,33 +37,111 @@ import Base from '../layouts/Base.astro';
       </p>
       <p class="small-note">
         The slides are live — arrow keys move through them, and one of them replays a real scene of
-        play as it was typed at the table.
+        play, typed out at the speed it happened at the table.
       </p>
     </div>
   </section>
 
   <div class="divider">⚔</div>
 
+  <section class="container" id="campaigns">
+    <h2>Three Campaigns</h2>
+    <p class="section-lede">
+      Three different answers to what an AI gamesmaster is for — a proof, a full game, and a way in
+      for somebody who has never played one. All three run on the same engine and the same honest
+      dice.
+    </p>
+    <div class="grid-3 campaigns">
+
+      <article class="card camp accent-cobalt">
+        <p class="camp-status">Early demo</p>
+        <h3>The Veilwrack: The Stilling</h3>
+        <p class="camp-what">An original sky realm</p>
+        <p>
+          There is no ground. The winged Alar live on the calcified husks of dead sky-leviathans
+          above a toxic mist, and this season Lanternfall's windlane began to still. Nobody has
+          said the word out loud yet.
+        </p>
+        <p class="camp-stat">4 spires · 7 factions · 46 lore entries · a five-act arc</p>
+        <p class="camp-links">
+          <a href="https://github.com/fourth-wall-gaming/veilwrack-campaign">The worldbook →</a>
+          <a href="/craft/">How it was made →</a>
+        </p>
+      </article>
+
+      <article class="card camp accent-ruby">
+        <p class="camp-status">The full game</p>
+        <h3>And Then the Dragons Came: Purewater</h3>
+        <p class="camp-what">Classic Fantasy, for players who know the form</p>
+        <p>
+          A canal city where the Lake Lady's holy water meets the sea, three days before a sacred
+          tourney. A baron has arrived with a champion nobody is allowed to see. Four strangers
+          turn up the same week.
+        </p>
+        <p class="camp-stat">4 entry points · 42 characters · 15 agendas on clocks</p>
+        <p class="camp-links">
+          <a href="https://fourth-wall-gaming.github.io/purewater-campaign/">Both guidebooks →</a>
+          <a href="https://github.com/fourth-wall-gaming/purewater-campaign">The repo →</a>
+        </p>
+      </article>
+
+      <article class="card camp accent-emerald">
+        <p class="camp-status">A first roleplaying game</p>
+        <h3>First Through</h3>
+        <p class="camp-what">Science fiction, written for ten- to fifteen-year-olds</p>
+        <p>
+          The doors between stars are instant, and only the young can use them, so the entire
+          traffic of human space rides on fifteen-year-olds. Every star, distance and planet in it
+          is a real and current measurement.
+        </p>
+        <p class="camp-stat">Build your own character · Act One is one sitting · a page for parents</p>
+        <p class="camp-links">
+          <a href="https://fourth-wall-gaming.github.io/first-through-campaign/">Both guidebooks →</a>
+          <a href="https://fourth-wall-gaming.github.io/first-through-campaign/for-parents.html">For parents →</a>
+        </p>
+      </article>
+
+    </div>
+    <p class="campaigns-foot">
+      <a class="btn btn-primary" href="/play/">Install one and open the first scene</a>
+    </p>
+  </section>
+
+  <div class="divider">✦</div>
+
   <section class="container">
-    <h2>The Catalogue</h2>
+    <div class="rules-box card">
+      <p class="rules-head">How a check resolves at this table</p>
+      <table>
+        <tbody>
+          <tr><td class="die">d100</td><td>Roll under your skill. The difficulty grade — <em>Easy</em> to <em>Herculean</em> — is declared before the dice fall.</td></tr>
+          <tr><td class="die">⚔</td><td>Combat runs the full Mythras exchange: differential rolls, special effects, hit locations, armour, wounds.</td></tr>
+          <tr><td class="die">✦</td><td>Every roll is returned as auditable JSON. The gamesmaster <strong>cannot</strong> fudge.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="container">
+    <h2>The Workshop</h2>
     <div class="grid-3">
       <div class="card">
         <h3>Mythras GM</h3>
-        <p>A Claude-powered Gamesmaster for Mythras Imperative. Rules engine, combat
-        resolution, character generation, campaign publishing — all persisted in TypeDB.</p>
+        <p>The engine the three campaigns run on. A deterministic d100 rules engine, combat
+        resolution, character generation and campaign publishing, all persisted in TypeDB —
+        so you can walk away mid-scene and come back weeks later.</p>
         <a href="https://github.com/fourth-wall-gaming/mythras-gm">The engine, on GitHub →</a>
       </div>
-      <div class="card">
-        <h3>The Veilwrack: The Stilling</h3>
-        <p>An original sky realm. No ground — winged peoples on the calcified husks of dead
-        sky-leviathans, and the wind itself is dying. 46 lore entries, 7 factions, a
-        five-act arc.</p>
-        <a href="https://github.com/fourth-wall-gaming/veilwrack-campaign">The worldbook, on GitHub →</a>
+      <div class="card accent-amber">
+        <h3>Behind the Screen</h3>
+        <p>How it works: the rules engine that cannot be talked out of a result, a knowledge
+        graph as the save file, and campaigns published as Git repos.</p>
+        <a href="/tech/">The architecture →</a>
       </div>
       <div class="card">
         <h3>Gallery</h3>
-        <p>Art, and eventually film and comics, generated alongside the worlds — every
-        piece traceable to the campaign canon it illustrates.</p>
+        <p>What the games left behind — novels written out of real played sessions, with the
+        dialogue taken from the transcript, and art generated alongside the worlds.</p>
         <a href="/gallery/">Browse the gallery →</a>
       </div>
     </div>
@@ -177,5 +217,30 @@ import Base from '../layouts/Base.astro';
     .talk p { color: var(--text-dim); }
     .talk-links { display: flex; gap: 0.9rem; flex-wrap: wrap; margin: 1.25rem 0 0; }
     .small-note { font-size: 0.875rem; font-style: italic; margin: 1rem 0 0; }
+    .section-lede { color: var(--text-dim); max-width: 46rem; margin: 0 0 1.5rem; }
+    .camp { display: flex; flex-direction: column; height: 100%; }
+    .camp h3 { margin: 0.1rem 0 0.15rem; }
+    .camp-status {
+      font-variant: small-caps;
+      letter-spacing: 0.14em;
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--ruby);
+      margin: 0;
+    }
+    .camp.accent-cobalt .camp-status { color: var(--cobalt); }
+    .camp.accent-emerald .camp-status { color: var(--emerald); }
+    .camp-what { font-style: italic; color: var(--text-dim); margin: 0 0 0.7rem; font-size: 0.95rem; }
+    .camp-stat {
+      font-family: ui-monospace, Menlo, monospace;
+      font-size: 0.78rem;
+      color: var(--text-dim);
+      margin: 0.6rem 0 0;
+      border-top: 1px solid var(--rule);
+    }
+    .camp-stat { margin-top: auto; padding-top: 0.6rem; }
+    .camp-links { margin: 0.9rem 0 0; display: flex; flex-direction: column; gap: 0.2rem; }
+    .camp-links a { font-size: 0.95rem; }
+    .campaigns-foot { margin-top: 1.75rem; }
   </style>
 </Base>
