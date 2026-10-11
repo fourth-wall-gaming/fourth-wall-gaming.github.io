@@ -3,12 +3,12 @@ import Base from '../layouts/Base.astro';
 ---
 <Base
   title="Play · Fourth Wall Gaming"
-  description="Run your first session — install the Mythras GM plugin for Claude Code, pick a campaign, and open the first scene. With a way to check each step actually worked."
+  description="Run your first session — install the Mythras GM plugin in Claude Code or Codex, pick a campaign, and open the first scene. With a way to check each step actually worked."
 >
   <article class="prose play">
 
     <header class="masthead">
-      <p class="kicker">Mythras GM · Claude Code</p>
+      <p class="kicker">Mythras GM · Claude Code &amp; Codex</p>
       <h1>Run Your First Session</h1>
       <p class="standfirst">
         Claude as your Gamesmaster, running Mythras Imperative with a real dice engine and every
@@ -23,7 +23,7 @@ import Base from '../layouts/Base.astro';
       <div class="card prereq">
         <span class="eyebrow">Required</span>
         <strong class="val">Claude Code</strong>
-        <span class="note">The engine ships as a plugin, so everything below is typed at a <a href="https://claude.ai/code">Claude Code</a> prompt.</span>
+        <span class="note">The engine ships as a plugin, so everything below is typed at a <a href="https://claude.ai/code">Claude Code</a> prompt. It also runs in <strong>Codex</strong> — see <a href="#chatgpt">Playing in ChatGPT or Codex</a>.</span>
       </div>
       <div class="card prereq">
         <span class="eyebrow">Required</span>
@@ -141,6 +141,114 @@ import Base from '../layouts/Base.astro';
           <span class="eyebrow">Confirm</span>
           <p><code>a game is in progress</code> — with your campaign's clock and session number. Never run the start command again; it is only for a campaign that has not begun.</p>
         </div>
+      </li>
+
+    </ol>
+
+    <h2 id="chatgpt">Playing in ChatGPT or Codex</h2>
+    <p>
+      The same plugin runs in Codex. One thing to settle first, because it decides where you can
+      play at all: <strong>this cannot run in ChatGPT on the web or on your phone.</strong> The
+      Gamesmaster needs a real dice engine and a real database on a real machine — a command line,
+      a local TypeDB, and a startup check that runs before the first scene. None of that exists in
+      a browser tab, plugin startup checks don't run in cloud-orchestrated ChatGPT Work, and
+      installing a plugin on the web doesn't put its scripts on any machine.
+    </p>
+    <p>
+      So: the <strong>ChatGPT desktop app</strong>, or the <strong>Codex CLI</strong>. Both run
+      locally, which is the whole requirement.
+    </p>
+
+    <ol class="steps">
+
+      <li class="step">
+        <h3>Add the marketplace</h3>
+        <p>In the desktop app, open <strong>Plugins</strong> and add it. From a terminal:</p>
+        <div class="cmd">
+          <pre id="cx-mkt"><code>codex plugin marketplace add fourth-wall-gaming/mythras-gm</code></pre>
+          <button class="copy" type="button" data-copy="cx-mkt">Copy</button>
+        </div>
+        <p class="small">
+          If a dialog asks for a <em>Git Ref</em> or <em>Sparse Paths</em>, leave both blank. A ref
+          pins the catalogue to one branch, and a sparse checkout would fetch the catalogue while
+          leaving the engine behind.
+        </p>
+        <div class="confirm">
+          <span class="eyebrow">Confirm</span>
+          <p><code>codex plugin marketplace list</code> names it. If it doesn't, the error it prints is the real one — act on that rather than on the install failing later.</p>
+        </div>
+      </li>
+
+      <li class="step">
+        <h3>Install both plugins — the engine will not come along by itself</h3>
+        <p>
+          In Claude Code a campaign pulls the engine in as a declared dependency. <strong>Codex does
+          not do that</strong>: its plugin format has no dependency field, so a campaign installed
+          on its own is a campaign whose first act is to tell you the engine is missing, on a
+          machine where nothing else is wrong.
+        </p>
+        <div class="cmd">
+          <pre id="cx-install"><code>codex plugin add mythras-gm@fourth-wall-gaming
+codex plugin add <span data-camp-cmd>purewater</span>@fourth-wall-gaming</code></pre>
+          <button class="copy" type="button" data-copy="cx-install">Copy</button>
+        </div>
+      </li>
+
+      <li class="step">
+        <h3>Approve the startup check</h3>
+        <p>
+          Codex will not run a plugin's startup check until you have reviewed it — open
+          <code>/hooks</code> and trust both. Until you do, the check never runs, so the database is
+          never started and the skills have no engine to talk to. <em>This looks exactly like a
+          broken save file and is not one.</em>
+        </p>
+      </li>
+
+      <li class="step">
+        <h3>Let it keep a save and fetch its database</h3>
+        <p>
+          Codex sandboxes what a session may write and whether it may reach the network. The game
+          keeps its save outside your working folder and downloads its database once, so both need
+          allowing in <code>~/.codex/config.toml</code>:
+        </p>
+        <div class="cmd">
+          <pre id="cx-sandbox"><code>[sandbox_workspace_write]
+network_access = true
+writable_roots = ["~/.mythras-gm", "~/.claude/mythras-gm"]</code></pre>
+          <button class="copy" type="button" data-copy="cx-sandbox">Copy</button>
+        </div>
+        <p class="small">
+          Or ask the agent to make that change for you — it can read and edit that file. Either way
+          you need a fresh session afterwards, because a config change doesn't reach a running one.
+        </p>
+      </li>
+
+      <li class="step">
+        <h3>Start a fresh session, then check before you play</h3>
+        <p>
+          Skills only appear in a session opened <em>after</em> an install. One command tells you
+          whether this machine can run the game, and names what to do about anything that can't. It
+          changes nothing — no installs, no downloads, no writes.
+        </p>
+        <div class="cmd">
+          <pre id="cx-verify"><code>bash ~/.codex/plugins/cache/*/mythras-gm/*/scripts/verify-install.sh</code></pre>
+          <button class="copy" type="button" data-copy="cx-verify">Copy</button>
+        </div>
+        <div class="confirm">
+          <span class="eyebrow">Confirm</span>
+          <p>Every row <code>ok</code>. Watch the <code>campaign</code> row in particular — that one is the campaign finding the engine, which is the part that differs between the two hosts.</p>
+          <p>And the session should open with a <code>mythras-gm ready</code> line naming an absolute path, plus a line from the campaign. <strong>If neither appears, don't start a game</strong> — nothing would be saved.</p>
+        </div>
+      </li>
+
+      <li class="step">
+        <h3>Then play</h3>
+        <p>
+          There is nothing to type. Codex has no slash commands, so the entry points are skills:
+          ask to play, or name the <code><span data-camp-cmd>purewater</span>-start</code> skill for a
+          first run and <code>mythras-play</code> to resume. The steps are the same as above; only
+          the way you reach them differs.
+        </p>
       </li>
 
     </ol>
